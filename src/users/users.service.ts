@@ -1,26 +1,59 @@
 import { Injectable } from '@nestjs/common';
+import { v4 } from 'uuid';
+
+import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
+
+import { storage } from '../data/storage';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    return new Promise<User>((res) => {
+      const newUser: User = {
+        id: v4(),
+        login: createUserDto.login,
+        password: createUserDto.password,
+        version: 1,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      };
+
+      storage.users.push(newUser);
+
+      res(newUser);
+    });
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(): Promise<User[]> {
+    return new Promise((res) => {
+      const users = storage.users;
+      res(users);
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string): Promise<User> {
+    return new Promise((res) => {
+      const user = storage.users.find((user) => id === user.id);
+      user ? res(user) : res(null);
+    });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(user: User, { newPassword }: UpdatePasswordDto): Promise<User> {
+    return new Promise((res) => {
+      user.updatedAt = Date.now();
+      user.password = newPassword;
+      user.version++;
+
+      res(user);
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string): Promise<void> {
+    return new Promise((res) => {
+      storage.users = storage.users.filter((user) => id !== user.id);
+      res();
+    });
   }
 }
