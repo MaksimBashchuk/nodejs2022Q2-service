@@ -1,26 +1,57 @@
 import { Injectable } from '@nestjs/common';
+import { v4 } from 'uuid';
+
+import { Artist } from './entities/artist.entity';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 
+import { storage } from '../data/storage';
+
 @Injectable()
 export class ArtistsService {
-  create(createArtistDto: CreateArtistDto) {
-    return 'This action adds a new artist';
+  async create(createArtistDto: CreateArtistDto) {
+    return new Promise<Artist>((res) => {
+      const {} = createArtistDto;
+
+      const newArtist: Artist = {
+        id: v4(),
+        ...createArtistDto,
+      };
+
+      storage.artists.push(newArtist);
+
+      res(newArtist);
+    });
   }
 
-  findAll() {
-    return `This action returns all artists`;
+  async findAll(): Promise<Artist[]> {
+    return new Promise((res) => {
+      res(storage.artists);
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} artist`;
+  async findOne(id: string): Promise<Artist> {
+    return new Promise((res) => {
+      const artist = storage.artists.find((artist) => id === artist.id);
+      artist ? res(artist) : res(null);
+    });
   }
 
-  update(id: number, updateArtistDto: UpdateArtistDto) {
-    return `This action updates a #${id} artist`;
+  async update(
+    artist: Artist,
+    updateArtistDto: UpdateArtistDto,
+  ): Promise<Artist> {
+    return new Promise((res) => {
+      Object.assign(artist, updateArtistDto);
+
+      res(artist);
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} artist`;
+  async remove(id: string): Promise<void> {
+    return new Promise((res) => {
+      storage.artists = storage.artists.filter((artist) => id !== artist.id);
+      res();
+    });
   }
 }

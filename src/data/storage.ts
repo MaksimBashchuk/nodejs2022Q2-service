@@ -65,4 +65,26 @@ export const storage: IStorage = {
       artistId: null,
     },
   ],
+  artists: [
+    {
+      id: 'beee2200-3567-4bfd-88b8-710f13b04c9c',
+      name: 'artist1',
+      grammy: false,
+    },
+    {
+      id: '34abd297-d5b2-41c2-ac8c-9b1af80868d4',
+      name: 'artist2',
+      grammy: false,
+    },
+    {
+      id: '5d377481-8955-4a30-a681-fbab55b702a3',
+      name: 'artist3',
+      grammy: true,
+    },
+    {
+      id: 'c841c954-2e41-4e55-b623-dd51fd45f767',
+      name: 'artist4',
+      grammy: false,
+    },
+  ],
 };

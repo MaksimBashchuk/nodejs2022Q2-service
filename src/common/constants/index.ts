@@ -3,6 +3,7 @@ import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 export const APP_ROUTES = {
   USER: 'user',
   TRACK: 'track',
+  ARTIST: 'artist',
 };
 
 export const WRONG_PASS_RESPONSE = {
