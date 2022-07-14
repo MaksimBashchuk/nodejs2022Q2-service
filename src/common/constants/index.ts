@@ -4,6 +4,7 @@ export const APP_ROUTES = {
   USER: 'user',
   TRACK: 'track',
   ARTIST: 'artist',
+  ALBUM: 'album',
 };
 
 export const WRONG_PASS_RESPONSE = {

@@ -3,40 +3,63 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Put,
+  HttpCode,
 } from '@nestjs/common';
+import { StatusCodes } from 'http-status-codes';
+
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
+import { Params } from '../shared/params.dto';
 
-@Controller('albums')
+import { APP_ROUTES } from '../common/constants';
+import { generateNotFoundException } from '../common/utils';
+
+@Controller(APP_ROUTES.ALBUM)
 export class AlbumsController {
   constructor(private readonly albumsService: AlbumsService) {}
 
   @Post()
-  create(@Body() createAlbumDto: CreateAlbumDto) {
-    return this.albumsService.create(createAlbumDto);
+  async create(@Body() createAlbumDto: CreateAlbumDto) {
+    return await this.albumsService.create(createAlbumDto);
   }
 
   @Get()
-  findAll() {
-    return this.albumsService.findAll();
+  async findAll() {
+    return await this.albumsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.albumsService.findOne(+id);
+  async findOne(@Param() { id }: Params) {
+    const album = await this.albumsService.findOne(id);
+
+    if (!album) generateNotFoundException(APP_ROUTES.ALBUM);
+
+    return album;
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAlbumDto: UpdateAlbumDto) {
-    return this.albumsService.update(+id, updateAlbumDto);
+  @Put(':id')
+  async update(
+    @Param() { id }: Params,
+    @Body() updateAlbumDto: UpdateAlbumDto,
+  ) {
+    const album = await this.albumsService.findOne(id);
+
+    if (!album) generateNotFoundException(APP_ROUTES.ALBUM);
+
+    await this.albumsService.update(album, updateAlbumDto);
+    return album;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.albumsService.remove(+id);
+  @HttpCode(StatusCodes.NO_CONTENT)
+  async remove(@Param() { id }: Params) {
+    const album = await this.albumsService.findOne(id);
+
+    if (!album) generateNotFoundException(APP_ROUTES.ALBUM);
+    return await this.albumsService.remove(id);
   }
 }

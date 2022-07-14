@@ -87,4 +87,30 @@ export const storage: IStorage = {
       grammy: false,
     },
   ],
+  albums: [
+    {
+      id: '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      name: 'album1',
+      year: 2014,
+      artistId: null,
+    },
+    {
+      id: 'b262de0a-91b3-49cd-ba20-29e27d2af903',
+      name: 'album2',
+      year: 2014,
+      artistId: null,
+    },
+    {
+      id: '94a87abf-5174-4241-a24e-af5fb2227629',
+      name: 'album3',
+      year: 2014,
+      artistId: null,
+    },
+    {
+      id: 'fa2b8e5b-5def-485f-8beb-8d78606016ee',
+      name: 'album4',
+      year: 2014,
+      artistId: null,
+    },
+  ],
 };
