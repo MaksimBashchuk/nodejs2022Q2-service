@@ -11,6 +11,7 @@ import {
   ForbiddenException,
   HttpCode,
 } from '@nestjs/common';
+import { StatusCodes } from 'http-status-codes';
 
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -20,7 +21,6 @@ import { Params } from '../shared/params.dto';
 
 import { APP_ROUTES, WRONG_PASS_RESPONSE } from '../common/constants';
 import { generateNotFoundException } from '../common/utils';
-import { StatusCodes } from 'http-status-codes';
 
 @Controller(APP_ROUTES.USER)
 export class UsersController {

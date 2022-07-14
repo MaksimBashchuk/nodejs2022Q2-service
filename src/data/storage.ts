@@ -35,4 +35,34 @@ export const storage: IStorage = {
       updatedAt: 1657636422310,
     },
   ],
+  tracks: [
+    {
+      id: '0bf5202e-6590-44d1-bb36-e87095af7df6',
+      name: 'track1',
+      duration: 123123,
+      albumId: null,
+      artistId: null,
+    },
+    {
+      id: '13bbe807-c639-4539-949e-57884be8c05c',
+      name: 'track2',
+      duration: 123123,
+      albumId: null,
+      artistId: null,
+    },
+    {
+      id: 'a50eed29-bd82-4903-8691-1600f83ef2bd',
+      name: 'track3',
+      duration: 123123,
+      albumId: null,
+      artistId: null,
+    },
+    {
+      id: 'cdb38f9c-4c64-4361-a098-e41a47034c27',
+      name: 'track4',
+      duration: 123123,
+      albumId: null,
+      artistId: null,
+    },
+  ],
 };

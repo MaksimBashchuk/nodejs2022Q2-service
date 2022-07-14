@@ -1,6 +1,6 @@
 import { IsUUID } from 'class-validator';
 
 export class Params {
-  @IsUUID()
+  @IsUUID('4')
   id: string;
 }
