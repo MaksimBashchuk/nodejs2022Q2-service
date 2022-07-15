@@ -8,4 +8,9 @@ export interface IStorage {
   tracks: Track[];
   artists: Artist[];
   albums: Album[];
+  favorites: {
+    tracks: string[];
+    artists: string[];
+    albums: string[];
+  };
 }

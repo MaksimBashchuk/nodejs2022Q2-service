@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFavoriteDto } from './dto/create-favorite.dto';
-import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+
+import { Favorite } from './entities/favorite.entity';
+
+import { storage } from '../data/storage';
 
 @Injectable()
 export class FavoritesService {
-  create(createFavoriteDto: CreateFavoriteDto) {
-    return 'This action adds a new favorite';
+  async findAll(): Promise<Favorite> {
+    return new Promise((res) => {
+      res(storage.favorites);
+    });
   }
 
-  findAll() {
-    return `This action returns all favorites`;
+  async findOne(type: string, id: string): Promise<string> {
+    return new Promise((res) => {
+      const entityId = storage.favorites[`${type}s`].find(
+        (item) => item === id,
+      );
+      res(entityId);
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} favorite`;
+  async add(type: string, id: string): Promise<void> {
+    return new Promise((res) => {
+      storage.favorites[`${type}s`].push(id);
+      res();
+    });
   }
 
-  update(id: number, updateFavoriteDto: UpdateFavoriteDto) {
-    return `This action updates a #${id} favorite`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} favorite`;
+  async remove(type: string, id: string): Promise<void> {
+    return new Promise((res) => {
+      const result = storage.favorites[`${type}s`].filter(
+        (item) => item !== id,
+      );
+      storage.favorites[`${type}s`] = result;
+      res();
+    });
   }
 }

@@ -113,4 +113,15 @@ export const storage: IStorage = {
       artistId: null,
     },
   ],
+  favorites: {
+    tracks: [
+      '0bf5202e-6590-44d1-bb36-e87095af7df6',
+      'a50eed29-bd82-4903-8691-1600f83ef2bd',
+    ],
+    artists: ['c841c954-2e41-4e55-b623-dd51fd45f767'],
+    albums: [
+      '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      'b262de0a-91b3-49cd-ba20-29e27d2af903',
+    ],
+  },
 };

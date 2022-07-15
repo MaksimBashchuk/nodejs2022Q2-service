@@ -23,24 +23,22 @@ import { APP_ROUTES, WRONG_PASS_RESPONSE } from '../common/constants';
 import { generateNotFoundException } from '../common/utils';
 
 @Controller(APP_ROUTES.USER)
+@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAll() {
     const users = await this.usersService.findAll();
     return users.map((user) => new User(user));
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const newUser = await this.usersService.create(createUserDto);
     return new User(newUser);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
   async findOne(@Param() { id }: Params) {
     const user = await this.usersService.findOne(id);
@@ -50,7 +48,6 @@ export class UsersController {
     return new User(user);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
   async update(
     @Param() { id }: Params,
