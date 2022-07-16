@@ -11,16 +11,22 @@ import {
 import { StatusCodes } from 'http-status-codes';
 
 import { AlbumsService } from './albums.service';
+import { TracksService } from '../tracks/tracks.service';
+import { FavoritesService } from '../favorites/favorites.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Params } from '../shared/params.dto';
 
-import { APP_ROUTES } from '../common/constants';
+import { APP_ROUTES, ID_FIELDS } from '../common/constants';
 import { generateNotFoundException } from '../common/utils';
 
 @Controller(APP_ROUTES.ALBUM)
 export class AlbumsController {
-  constructor(private readonly albumsService: AlbumsService) {}
+  constructor(
+    private readonly albumsService: AlbumsService,
+    private readonly tracksService: TracksService,
+    private readonly favoritesService: FavoritesService,
+  ) {}
 
   @Post()
   async create(@Body() createAlbumDto: CreateAlbumDto) {
@@ -60,6 +66,8 @@ export class AlbumsController {
     const album = await this.albumsService.findOne(id);
 
     if (!album) generateNotFoundException(APP_ROUTES.ALBUM);
+    await this.tracksService.setIdFieldToNull(ID_FIELDS.ALBUM, id);
+    await this.favoritesService.remove(APP_ROUTES.ALBUM, id);
     return await this.albumsService.remove(id);
   }
 }

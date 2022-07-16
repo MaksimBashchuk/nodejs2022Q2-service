@@ -53,4 +53,15 @@ export class AlbumsService {
       res();
     });
   }
+
+  async setIdFieldToNull(fieldName: string, id: string): Promise<void> {
+    return new Promise((res) => {
+      storage.albums.forEach((album) => {
+        if (id === album[fieldName]) {
+          album[fieldName] = null;
+        }
+      });
+      res();
+    });
+  }
 }

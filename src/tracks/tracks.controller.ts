@@ -11,6 +11,7 @@ import {
 import { StatusCodes } from 'http-status-codes';
 
 import { TracksService } from './tracks.service';
+import { FavoritesService } from '../favorites/favorites.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import { Params } from '../shared/params.dto';
@@ -20,7 +21,10 @@ import { generateNotFoundException } from '../common/utils';
 
 @Controller(APP_ROUTES.TRACK)
 export class TracksController {
-  constructor(private readonly tracksService: TracksService) {}
+  constructor(
+    private readonly tracksService: TracksService,
+    private readonly favoritesService: FavoritesService,
+  ) {}
 
   @Post()
   async create(@Body() createTrackDto: CreateTrackDto) {
@@ -60,6 +64,7 @@ export class TracksController {
     const track = await this.tracksService.findOne(id);
 
     if (!track) generateNotFoundException(APP_ROUTES.TRACK);
+    await this.favoritesService.remove(APP_ROUTES.TRACK, id);
     return await this.tracksService.remove(id);
   }
 }

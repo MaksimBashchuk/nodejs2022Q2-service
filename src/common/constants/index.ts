@@ -1,5 +1,10 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 
+export const ID_FIELDS = {
+  ALBUM: 'albumId',
+  ARTIST: 'artistId',
+};
+
 export const APP_ROUTES = {
   USER: 'user',
   TRACK: 'track',

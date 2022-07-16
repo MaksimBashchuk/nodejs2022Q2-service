@@ -54,4 +54,15 @@ export class TracksService {
       res();
     });
   }
+
+  async setIdFieldToNull(fieldName: string, id: string): Promise<void> {
+    return new Promise((res) => {
+      storage.tracks.forEach((track) => {
+        if (id === track[fieldName]) {
+          track[fieldName] = null;
+        }
+      });
+      res();
+    });
+  }
 }
