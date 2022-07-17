@@ -329,8 +329,8 @@ paths:
           description: The user has been deleted
         400:
           description: Bad request. userId is invalid (not uuid)
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
+        # 401:
+        #   $ref: '#/components/responses/UnauthorizedError'
         404:
           description: User not found
   /track:
