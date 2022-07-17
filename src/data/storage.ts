@@ -160,8 +160,8 @@ export const storage: IStorage = {
     tracks: [
       '0bf5202e-6590-44d1-bb36-e87095af7df6',
       'cdb38f9c-4c64-4361-a098-e41a47034c27',
-      '94a87abf-5174-4241-a24e-af5fb2227629',
-      'fa2b8e5b-5def-485f-8beb-8d78606016ee',
+      'e63286c0-7dfe-495b-befd-3df2827bea6b',
+      '5940c0aa-c3e7-4a3d-9ded-227eb8356855',
     ],
     artists: ['beee2200-3567-4bfd-88b8-710f13b04c9c'],
     albums: [
