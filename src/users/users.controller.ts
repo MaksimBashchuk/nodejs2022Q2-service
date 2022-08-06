@@ -33,11 +33,11 @@ export class UsersController {
     return users.map((user) => new User(user));
   }
 
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    const newUser = await this.usersService.create(createUserDto);
-    return new User(newUser);
-  }
+  // @Post()
+  // async create(@Body() createUserDto: CreateUserDto) {
+  //   const newUser = await this.usersService.create(createUserDto);
+  //   return new User(newUser);
+  // }
 
   @Get(':id')
   async findOne(@Param() { id }: Params) {
