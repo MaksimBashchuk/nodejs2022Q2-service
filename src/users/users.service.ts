@@ -4,6 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { v4 } from 'uuid';
+import { compare, hash } from 'bcrypt';
 
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -13,6 +14,7 @@ import {
   LOGIN_ALREADY_EXISTS,
   REPLACE_TOKEN,
   WRONG_LOGIN,
+  WRONG_PASS_RESPONSE,
 } from '../common/constants';
 import { storage } from '../data/storage';
 
@@ -27,11 +29,13 @@ export class UsersService {
       throw new BadRequestException({ ...LOGIN_ALREADY_EXISTS, message });
     }
 
+    const hashedPass = await this.hashPass(createUserDto.password);
+
     return new Promise<User>((res) => {
       const newUser: User = {
         id: v4(),
         login: createUserDto.login,
-        password: createUserDto.password,
+        password: hashedPass,
         version: 1,
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -57,10 +61,18 @@ export class UsersService {
     });
   }
 
-  async update(user: User, { newPassword }: UpdatePasswordDto): Promise<User> {
+  async update(
+    user: User,
+    { newPassword, oldPassword }: UpdatePasswordDto,
+  ): Promise<User> {
+    const isPassMatch = await compare(oldPassword, user.password);
+    if (!isPassMatch) throw new ForbiddenException(WRONG_PASS_RESPONSE);
+
+    const hashedNewPass = await this.hashPass(newPassword);
+
     return new Promise((res) => {
       user.updatedAt = Date.now();
-      user.password = newPassword;
+      user.password = hashedNewPass;
       user.version++;
 
       res(user);
@@ -88,4 +100,8 @@ export class UsersService {
 
     return user;
   };
+
+  async hashPass(pass: string) {
+    return await hash(pass, +process.env.CRYPT_SALT);
+  }
 }
