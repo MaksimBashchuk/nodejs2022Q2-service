@@ -5,7 +5,7 @@ export const storage: IStorage = {
     {
       id: 'b08da03b-2bb1-4977-9aca-6ef9a8298912',
       login: 'Diana Prince',
-      password: '1111',
+      password: '$2b$10$M91UH2Fga3QOuw1J3/R4je4AkETo4I6SLURUmH6oloiiWBSJAnnUy',
       version: 1,
       createdAt: 1657636183020,
       updatedAt: 1657636183020,
@@ -13,7 +13,7 @@ export const storage: IStorage = {
     {
       id: '9cd8a1be-829f-4154-b46b-19e966a2b198',
       login: 'Barry Allen',
-      password: '1111',
+      password: '$2b$10$wIphVuCea4PTYodKLPwggedVTdTC2Ozo18c6z..Oa8NeqVl8vJvz6',
       version: 1,
       createdAt: 1657636183711,
       updatedAt: 1657636183711,
@@ -21,7 +21,7 @@ export const storage: IStorage = {
     {
       id: '4f89d00b-07f4-42ec-959b-856fa264f95e',
       login: 'Bruce Wayne',
-      password: '1111',
+      password: '$2b$10$LddnFSThnfZmbYVJy/lwhuw9H7VtRmDmkwVUnOFZEfhttYYA1wG7W',
       version: 1,
       createdAt: 1657636184336,
       updatedAt: 1657636184336,
@@ -29,7 +29,7 @@ export const storage: IStorage = {
     {
       id: '0abec08c-66f2-47a9-8b70-04ad33ef3798',
       login: 'Clark Kent',
-      password: '1111',
+      password: '$2b$10$XwxTpFI21Ojf8rDVdBdtMOhHvYjepTXP.nwvDQN0kLts54Kfd4.oO',
       version: 1,
       createdAt: 1657636422310,
       updatedAt: 1657636422310,
