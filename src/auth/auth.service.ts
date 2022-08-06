@@ -45,10 +45,13 @@ export class AuthService {
 
   async refresh(userId: string, refToken: string) {
     const user = await this.userService.findOne(userId);
-    const isTokenMatch = await compare(refToken, user.hashedRefToken);
+    if (!user || !user.hashedRefToken)
+      throw new ForbiddenException('Access Denied');
+
+    const isTokenMatch = await compare(refToken, user?.hashedRefToken);
 
     if (!isTokenMatch || !user.hashedRefToken)
-      throw new ForbiddenException('Tokens do not match');
+      throw new ForbiddenException("Tokens don't match");
 
     const tokens = await this.signUser(user.id, user.login);
     await this.updateRefTokenHash(user.id, tokens.refreshToken);

@@ -26,9 +26,3 @@ export const WRONG_LOGIN = {
   message: `Cannot find user with login '${REPLACE_TOKEN}'`,
   error: ReasonPhrases.FORBIDDEN,
 };
-
-export const LOGIN_ALREADY_EXISTS = {
-  statusCode: StatusCodes.BAD_REQUEST,
-  message: `User with login '${REPLACE_TOKEN}' already exists`,
-  error: ReasonPhrases.BAD_REQUEST,
-};

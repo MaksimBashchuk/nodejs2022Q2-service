@@ -11,7 +11,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 
 import {
-  LOGIN_ALREADY_EXISTS,
   REPLACE_TOKEN,
   WRONG_LOGIN,
   WRONG_PASS_RESPONSE,
@@ -21,14 +20,6 @@ import { storage } from '../data/storage';
 @Injectable()
 export class UsersService {
   async create(createUserDto: CreateUserDto) {
-    if (!this.isLoginUnique(createUserDto.login)) {
-      const message = LOGIN_ALREADY_EXISTS.message.replace(
-        REPLACE_TOKEN,
-        createUserDto.login,
-      );
-      throw new BadRequestException({ ...LOGIN_ALREADY_EXISTS, message });
-    }
-
     const hashedPass = await this.hashPass(createUserDto.password);
 
     return new Promise<User>((res) => {

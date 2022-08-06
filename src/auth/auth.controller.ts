@@ -14,7 +14,6 @@ import { GetCurrentUser } from '../common/decorators/get-user.decorator';
 import { GetCurrentUserId } from '../common/decorators/get-user-id.decorator copy';
 import { Public } from '../common/decorators/public.decorator';
 import { RefreshGuard } from '../common/guards/refresh.guard';
-import { storage } from 'src/data/storage';
 
 @Controller('auth')
 export class AuthController {
@@ -24,7 +23,6 @@ export class AuthController {
   @Post('signup')
   async signUp(@Body() body: CreateUserDto): Promise<Tokens> {
     const tokens = await this.authService.signUp(body);
-    console.log(storage.users);
     return tokens;
   }
 
