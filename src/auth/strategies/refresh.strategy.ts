@@ -2,7 +2,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { config } from 'dotenv';
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { AuthPayload, RefreshPayload } from '../types';
 
 config();
 
@@ -17,8 +18,11 @@ export class RefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
     });
   }
 
-  async validate(req: Request, payload: any) {
-    const refToken = req.get('authorization').replace('Bearer', '').trim();
+  validate(req: Request, payload: AuthPayload): RefreshPayload {
+    const refToken = req?.get('Authorization')?.replace('Bearer', '').trim();
+
+    if (!refToken) throw new ForbiddenException('Refresh token malformed');
+
     return { ...payload, refToken };
   }
 }

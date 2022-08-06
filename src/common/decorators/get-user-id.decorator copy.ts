@@ -1,8 +1,10 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { AuthPayload } from '../../auth/types';
 
 export const GetCurrentUserId = createParamDecorator(
-  (data: undefined, context: ExecutionContext) => {
+  (_: undefined, context: ExecutionContext) => {
     const req = context.switchToHttp().getRequest();
-    return req.user['sub'];
+    const user = <AuthPayload>req.user;
+    return user.sub;
   },
 );
