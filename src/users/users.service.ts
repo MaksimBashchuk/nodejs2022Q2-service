@@ -1,15 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { v4 } from 'uuid';
 
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 
+import {
+  LOGIN_ALREADY_EXISTS,
+  REPLACE_TOKEN,
+  WRONG_LOGIN,
+} from '../common/constants';
 import { storage } from '../data/storage';
 
 @Injectable()
 export class UsersService {
   async create(createUserDto: CreateUserDto) {
+    if (!this.isLoginUnique(createUserDto.login)) {
+      const message = LOGIN_ALREADY_EXISTS.message.replace(
+        REPLACE_TOKEN,
+        createUserDto.login,
+      );
+      throw new BadRequestException({ ...LOGIN_ALREADY_EXISTS, message });
+    }
+
     return new Promise<User>((res) => {
       const newUser: User = {
         id: v4(),
@@ -56,4 +73,19 @@ export class UsersService {
       res();
     });
   }
+
+  isLoginUnique = (login: string) => {
+    return !storage.users.find((user) => user.login === login);
+  };
+
+  findOneByLogin = (login: string) => {
+    const user = storage.users.find((user) => user.login === login);
+
+    if (!user) {
+      const message = WRONG_LOGIN.message.replace(REPLACE_TOKEN, login);
+      throw new ForbiddenException({ ...WRONG_LOGIN, message });
+    }
+
+    return user;
+  };
 }
