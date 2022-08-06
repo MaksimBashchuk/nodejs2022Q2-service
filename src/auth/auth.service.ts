@@ -7,7 +7,8 @@ config();
 
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
-import { Tokens } from './types/tokens';
+import { WRONG_PASS_RESPONSE } from '../common/constants';
+import { Tokens } from './types';
 
 @Injectable()
 export class AuthService {
@@ -17,14 +18,10 @@ export class AuthService {
   ) {}
 
   async signUp(body: CreateUserDto): Promise<Tokens> {
-    const hashedPass = await this.hashData(body.password);
-    const newUser = await this.userService.create({
-      ...body,
-      password: hashedPass,
-    });
+    const newUser = await this.userService.create(body);
 
     const tokens = await this.signUser(newUser.id, newUser.login);
-    await this.updateRefTokenHash(newUser.id, tokens.refresh_token);
+    await this.updateRefTokenHash(newUser.id, tokens.refreshToken);
 
     return tokens;
   }
@@ -33,10 +30,10 @@ export class AuthService {
     const user = this.userService.findOneByLogin(body.login);
 
     const isPassMatch = await compare(body.password, user.password);
-    if (!isPassMatch) throw new ForbiddenException('Password does not match');
+    if (!isPassMatch) throw new ForbiddenException(WRONG_PASS_RESPONSE);
 
     const tokens = await this.signUser(user.id, user.login);
-    await this.updateRefTokenHash(user.id, tokens.refresh_token);
+    await this.updateRefTokenHash(user.id, tokens.refreshToken);
 
     return tokens;
   }
@@ -50,10 +47,11 @@ export class AuthService {
     const user = await this.userService.findOne(userId);
     const isTokenMatch = await compare(refToken, user.hashedRefToken);
 
-    if (!isTokenMatch) throw new ForbiddenException('Tokens do not match');
+    if (!isTokenMatch || !user.hashedRefToken)
+      throw new ForbiddenException('Tokens do not match');
 
     const tokens = await this.signUser(user.id, user.login);
-    await this.updateRefTokenHash(user.id, tokens.refresh_token);
+    await this.updateRefTokenHash(user.id, tokens.refreshToken);
 
     return tokens;
   }
@@ -85,8 +83,8 @@ export class AuthService {
     );
 
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     };
   }
 
