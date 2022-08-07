@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { readFile } from 'fs/promises';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { LogLevel, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
 import { parse } from 'yaml';
 
@@ -12,7 +12,9 @@ import { config } from 'dotenv';
 config();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: <LogLevel[]>process.env.LOGGER_LEVELS.split(', '),
+  });
   const port = process.env.PORT || 4000;
 
   app.useGlobalPipes(new ValidationPipe());
