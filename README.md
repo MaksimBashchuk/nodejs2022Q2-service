@@ -5,10 +5,18 @@
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
 
+> **NOTE!!** The containerization and migration to Postgres step was skipped during the assignment. The application stores data in memory
+
 ## Downloading
 
 ```
 git clone https://github.com/MaksimBashchuk/nodejs2022Q2-service
+```
+
+## Checkout `auth` branch with
+
+```
+git checkout auth
 ```
 
 ## Installing NPM modules
@@ -35,29 +43,17 @@ For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
 After application running open new terminal and enter:
 
-To run all tests without authorization
-
-```
-npm run test
-```
-
-To run only one of all test suites
-
-```
-npm run test -- <path to suite>
-```
-
-<!-- To run all test with authorization
+To run all test with authorization
 
 ```
 npm run test:auth
-``` -->
+```
 
-<!-- To run only specific test suite with authorization
+To run only specific test suite with authorization
 
 ```
 npm run test:auth -- <path to suite>
-``` -->
+```
 
 ### Auto-fix and format
 
