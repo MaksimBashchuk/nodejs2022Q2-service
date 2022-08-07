@@ -13,10 +13,10 @@
 git clone https://github.com/MaksimBashchuk/nodejs2022Q2-service
 ```
 
-## Checkout `auth` branch with
+## Checkout `logging` branch with
 
 ```
-git checkout auth
+git checkout logging
 ```
 
 ## Installing NPM modules
