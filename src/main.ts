@@ -4,15 +4,20 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
 import { parse } from 'yaml';
+import { config } from 'dotenv';
 
 import { AppModule } from './app.module';
 
-import { config } from 'dotenv';
+import { getLogLevels } from './common/utils';
 
 config();
 
+const logLevels = getLogLevels(+process.env.LOGGER_LEVEL);
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: logLevels,
+  });
   const port = process.env.PORT || 4000;
 
   app.useGlobalPipes(new ValidationPipe());
