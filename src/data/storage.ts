@@ -1,0 +1,173 @@
+import { IStorage } from './storage.model';
+
+export const storage: IStorage = {
+  users: [
+    {
+      id: 'b08da03b-2bb1-4977-9aca-6ef9a8298912',
+      login: 'Diana Prince',
+      password: '1111',
+      version: 1,
+      createdAt: 1657636183020,
+      updatedAt: 1657636183020,
+    },
+    {
+      id: '9cd8a1be-829f-4154-b46b-19e966a2b198',
+      login: 'Barry Allen',
+      password: '1111',
+      version: 1,
+      createdAt: 1657636183711,
+      updatedAt: 1657636183711,
+    },
+    {
+      id: '4f89d00b-07f4-42ec-959b-856fa264f95e',
+      login: 'Bruce Wayne',
+      password: '1111',
+      version: 1,
+      createdAt: 1657636184336,
+      updatedAt: 1657636184336,
+    },
+    {
+      id: '0abec08c-66f2-47a9-8b70-04ad33ef3798',
+      login: 'Clark Kent',
+      password: '1111',
+      version: 1,
+      createdAt: 1657636422310,
+      updatedAt: 1657636422310,
+    },
+  ],
+  tracks: [
+    {
+      id: '0bf5202e-6590-44d1-bb36-e87095af7df6',
+      name: 'Icarus Lives',
+      duration: 264,
+      albumId: '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      artistId: '5d377481-8955-4a30-a681-fbab55b702a3',
+    },
+    {
+      id: '13bbe807-c639-4539-949e-57884be8c05c',
+      name: 'All New Materials',
+      duration: 320,
+      albumId: '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      artistId: '5d377481-8955-4a30-a681-fbab55b702a3',
+    },
+    {
+      id: 'a50eed29-bd82-4903-8691-1600f83ef2bd',
+      name: 'If I Were You',
+      duration: 208,
+      albumId: '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      artistId: '34abd297-d5b2-41c2-ac8c-9b1af80868d4',
+    },
+    {
+      id: 'cdb38f9c-4c64-4361-a098-e41a47034c27',
+      name: 'Futureproof',
+      duration: 207,
+      albumId: '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      artistId: '34abd297-d5b2-41c2-ac8c-9b1af80868d4',
+    },
+    {
+      id: 'c2875876-cc08-4d63-8fb0-65ea0878b80c',
+      name: 'Is Everybody Going Crazy?',
+      duration: 237,
+      albumId: 'b262de0a-91b3-49cd-ba20-29e27d2af903',
+      artistId: '34abd297-d5b2-41c2-ac8c-9b1af80868d4',
+    },
+    {
+      id: 'e63286c0-7dfe-495b-befd-3df2827bea6b',
+      name: 'Can You Afford to Be An Individual?',
+      duration: 236,
+      albumId: 'b262de0a-91b3-49cd-ba20-29e27d2af903',
+      artistId: '34abd297-d5b2-41c2-ac8c-9b1af80868d4',
+    },
+    {
+      id: '6992fd7e-6b9e-467e-9d7f-d833c9b1b11d',
+      name: 'How Did We Get So Dark?',
+      duration: 197,
+      albumId: '94a87abf-5174-4241-a24e-af5fb2227629',
+      artistId: 'beee2200-3567-4bfd-88b8-710f13b04c9c',
+    },
+    {
+      id: 'db66c281-e5a9-4126-a1cd-050b72263212',
+      name: 'Sleep',
+      duration: 256,
+      albumId: '94a87abf-5174-4241-a24e-af5fb2227629',
+      artistId: 'beee2200-3567-4bfd-88b8-710f13b04c9c',
+    },
+    {
+      id: '5940c0aa-c3e7-4a3d-9ded-227eb8356855',
+      name: 'Boilermaker',
+      duration: 209,
+      albumId: 'fa2b8e5b-5def-485f-8beb-8d78606016ee',
+      artistId: 'beee2200-3567-4bfd-88b8-710f13b04c9c',
+    },
+    {
+      id: '5862133e-65a6-4e1a-a014-17f4c410486c',
+      name: 'Oblivion',
+      duration: 161,
+      albumId: 'fa2b8e5b-5def-485f-8beb-8d78606016ee',
+      artistId: 'beee2200-3567-4bfd-88b8-710f13b04c9c',
+    },
+  ],
+  artists: [
+    {
+      id: 'beee2200-3567-4bfd-88b8-710f13b04c9c',
+      name: 'Royal Blood',
+      grammy: false,
+    },
+    {
+      id: '34abd297-d5b2-41c2-ac8c-9b1af80868d4',
+      name: 'Nothing But Thieves',
+      grammy: false,
+    },
+    {
+      id: '5d377481-8955-4a30-a681-fbab55b702a3',
+      name: 'Periphery',
+      grammy: false,
+    },
+  ],
+  albums: [
+    {
+      id: '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      name: 'Periphery',
+      year: 2010,
+      artistId: '5d377481-8955-4a30-a681-fbab55b702a3',
+    },
+    {
+      id: '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      name: 'Moral Panic II',
+      year: 2021,
+      artistId: '34abd297-d5b2-41c2-ac8c-9b1af80868d4',
+    },
+    {
+      id: 'b262de0a-91b3-49cd-ba20-29e27d2af903',
+      name: 'Moral Panic',
+      year: 2020,
+      artistId: '34abd297-d5b2-41c2-ac8c-9b1af80868d4',
+    },
+    {
+      id: '94a87abf-5174-4241-a24e-af5fb2227629',
+      name: 'How Did We Get So Dark?',
+      year: 2017,
+      artistId: 'beee2200-3567-4bfd-88b8-710f13b04c9c',
+    },
+    {
+      id: 'fa2b8e5b-5def-485f-8beb-8d78606016ee',
+      name: 'Typhoons',
+      year: 2021,
+      artistId: 'beee2200-3567-4bfd-88b8-710f13b04c9c',
+    },
+  ],
+  favorites: {
+    tracks: [
+      '0bf5202e-6590-44d1-bb36-e87095af7df6',
+      'cdb38f9c-4c64-4361-a098-e41a47034c27',
+      'e63286c0-7dfe-495b-befd-3df2827bea6b',
+      '5940c0aa-c3e7-4a3d-9ded-227eb8356855',
+    ],
+    artists: ['beee2200-3567-4bfd-88b8-710f13b04c9c'],
+    albums: [
+      '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      '76e53790-ccf5-48ff-97cd-809f43eb585f',
+      '94a87abf-5174-4241-a24e-af5fb2227629',
+    ],
+  },
+};

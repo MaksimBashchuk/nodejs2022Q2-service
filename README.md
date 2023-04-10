@@ -8,7 +8,7 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/MaksimBashchuk/nodejs2022Q2-service
 ```
 
 ## Installing NPM modules
@@ -19,9 +19,13 @@ npm install
 
 ## Running application
 
+Rename `.env.example` to `.env`.
+
 ```
 npm start
 ```
+
+> **NOTE!** App contains inmemory database with predefined values for testing purposes.
 
 After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
@@ -43,17 +47,17 @@ To run only one of all test suites
 npm run test -- <path to suite>
 ```
 
-To run all test with authorization
+<!-- To run all test with authorization
 
 ```
 npm run test:auth
-```
+``` -->
 
-To run only specific test suite with authorization
+<!-- To run only specific test suite with authorization
 
 ```
 npm run test:auth -- <path to suite>
-```
+``` -->
 
 ### Auto-fix and format
 
