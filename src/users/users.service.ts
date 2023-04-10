@@ -1,20 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { v4 } from 'uuid';
+import { compare, hash } from 'bcrypt';
 
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 
+import {
+  REPLACE_TOKEN,
+  WRONG_LOGIN,
+  WRONG_PASS_RESPONSE,
+} from '../common/constants';
 import { storage } from '../data/storage';
 
 @Injectable()
 export class UsersService {
   async create(createUserDto: CreateUserDto) {
+    const hashedPass = await this.hashPass(createUserDto.password);
+
     return new Promise<User>((res) => {
       const newUser: User = {
         id: v4(),
         login: createUserDto.login,
-        password: createUserDto.password,
+        password: hashedPass,
         version: 1,
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -40,10 +52,18 @@ export class UsersService {
     });
   }
 
-  async update(user: User, { newPassword }: UpdatePasswordDto): Promise<User> {
+  async update(
+    user: User,
+    { newPassword, oldPassword }: UpdatePasswordDto,
+  ): Promise<User> {
+    const isPassMatch = await compare(oldPassword, user.password);
+    if (!isPassMatch) throw new ForbiddenException(WRONG_PASS_RESPONSE);
+
+    const hashedNewPass = await this.hashPass(newPassword);
+
     return new Promise((res) => {
       user.updatedAt = Date.now();
-      user.password = newPassword;
+      user.password = hashedNewPass;
       user.version++;
 
       res(user);
@@ -55,5 +75,24 @@ export class UsersService {
       storage.users = storage.users.filter((user) => id !== user.id);
       res();
     });
+  }
+
+  isLoginUnique = (login: string) => {
+    return !storage.users.find((user) => user.login === login);
+  };
+
+  findOneByLogin = (login: string) => {
+    const user = storage.users.find((user) => user.login === login);
+
+    if (!user) {
+      const message = WRONG_LOGIN.message.replace(REPLACE_TOKEN, login);
+      throw new ForbiddenException({ ...WRONG_LOGIN, message });
+    }
+
+    return user;
+  };
+
+  async hashPass(pass: string) {
+    return await hash(pass, +process.env.CRYPT_SALT);
   }
 }

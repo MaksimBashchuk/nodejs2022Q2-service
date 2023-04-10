@@ -14,6 +14,8 @@ export class User {
 
   updatedAt: number;
 
+  hashedRefToken?: string;
+
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);
   }
